@@ -43,17 +43,18 @@ async function getLessTable(tableRangeName){
 }
 // Handle the /start command
 bot.start(async(ctx) => {
-  if(ctx.message.from.id===492277763){
-    return ctx.reply('Welcome to the Lesson table bot!\nSend the /table command to get the table');
+  if(ctx.message.from.username==="Qobulov_Asror"){
+    return ctx.reply('Welcome to the Lesson table bot!\nSend the /table@dars_jadvali_306_bot command to get the table');
   }
-  await ctx.telegram.leaveChat(ctx.message.chat.id);
-  await ctx.leaveChat();
+  if(ctx.chat.type !== 'supergroup')
+    return ctx.reply('Error: This bot can only be run by the bot creator');
 });
 
-bot.hears('/table', async(ctx) => {
-  if(ctx.message.from.id!==492277763){
-    return ctx.deleteMessage(ctx.message.message_id);
-  }
+bot.hears('/table@dars_jadvali_306_bot', async(ctx) => {
+  if(ctx.chat.type !== 'supergroup' )
+    if(ctx.message.from.username!=="Qobulov_Asror")
+      return ctx.deleteMessage(ctx.message.message_id);
+
   const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const today = new Date();
   const weekDayName = weekDays[today.getDay()];
@@ -114,48 +115,65 @@ bot.hears('/table', async(ctx) => {
   }
 });
 
-bot.hears('/dushanba', async(ctx) => {
+bot.hears('/dushanba@dars_jadvali_306_bot', async(ctx) => {
+  if(ctx.chat.type !== 'supergroup')
+    if(ctx.message.from.username!=="Qobulov_Asror")
+      return ctx.reply('Error: This bot can only be run by the bot creator');
   const result = await getLessTable('3 kurs!B145:G148');
   if(result)
     ctx.reply(result)
   else
     ctx.reply("error")
 })
-bot.hears('/seshanba', async(ctx) => {
+bot.hears('/seshanba@dars_jadvali_306_bot', async(ctx) => {
+  if(ctx.chat.type !== 'supergroup')
+    if(ctx.message.from.username!=="Qobulov_Asror")
+      return ctx.reply('Error: This bot can only be run by the bot creator');
   const result = await getLessTable('3 kurs!B149:G152');
   if(result)
     ctx.reply(result)
   else
     ctx.reply("error")
 })
-bot.hears('/chorshanba', (ctx) => {
+bot.hears('/chorshanba@dars_jadvali_306_bot', (ctx) => {
   ctx.reply(`'Chorshanba' malakaviy amaliyot kuni`);
 })
-bot.hears('/payshanba', (ctx) => {
+bot.hears('/payshanba@dars_jadvali_306_bot', (ctx) => {
   ctx.reply(`'Chorshanba' malakaviy amaliyot kuni`);
 })
-bot.hears('/juma', async(ctx) => {
+bot.hears('/juma@dars_jadvali_306_bot', async(ctx) => {
+  if(ctx.chat.type !== 'supergroup')
+    if(ctx.message.from.username!=="Qobulov_Asror")
+      return ctx.reply('Error: This bot can only be run by the bot creator');
   const result = await getLessTable('3 kurs!B161:G164');
   if(result)
     ctx.reply(result)
   else
     ctx.reply("error")
 })
-bot.hears('/shanba', async(ctx) => {
+bot.hears('/shanba@dars_jadvali_306_bot', async(ctx) => {
+  if(ctx.chat.type !== 'supergroup')
+    if(ctx.message.from.username!=="Qobulov_Asror")
+      return ctx.reply('Error: This bot can only be run by the bot creator');
   const result = await getLessTable('3 kurs!B165:G168');
   if(result)
     ctx.reply(result)
   else
     ctx.reply("error")
 })
-bot.hears('/yakshanba', (ctx) => {
+bot.hears('/yakshanba@dars_jadvali_306_bot', (ctx) => {
   ctx.reply(`'Yakshanba' dam olish kuni`);
 })
 
-
 bot.on('message', (ctx) => {
-  ctx.reply(`Please send the /table command to get the table\n Jadvalni olish uchun /table komandasini yuboring`);
+  if(ctx.chat.type != 'supergroup')
+    return ctx.reply(`Bot superguruhda ishlaydi`);
+  if(ctx.message.text==='help')
+    ctx.reply(`Dars jadvali uchun /table@dars_jadvali_306_bot komandasi`);
+  if(ctx.message.text==='help -all')
+    ctx.reply(`Bugungi jadvali /table@dars_jadvali_306_bot \n dushanba uchun /dushanba@dars_jadvali_306_bot \nseshanba uchun /seshanba@dars_jadvali_306_bot \njuma uchun /juma@dars_jadvali_306_bot \nshanba uchun /shanba@dars_jadvali_306_bot`);
 })
+
 
 // Start the bot
 bot.launch();
