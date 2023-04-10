@@ -25,7 +25,6 @@ async function getLessTable(weekName=false){
     const data = cache.get(weekDayName);
     if(data){
       return data;
-      return;
     }
   
     switch (weekDayName) {
@@ -105,7 +104,7 @@ bot.on('message', async(ctx) => {
       return ctx.reply(`Bugungi jadvali /table@dars_jadvali_306_bot \n dushanba uchun /dushanba@dars_jadvali_306_bot \nseshanba uchun /seshanba@dars_jadvali_306_bot \njuma uchun /juma@dars_jadvali_306_bot \nshanba uchun /shanba@dars_jadvali_306_bot`);
     }
     case '/dushanba@dars_jadvali_306_bot': {
-      const result = await getLessTable();
+      const result = await getLessTable('3 kurs!B145:G148');
       if(result)
         return ctx.reply(result)
       else
